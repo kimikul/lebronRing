@@ -40,37 +40,29 @@ function startGame() {
 	}
 
 	var player = {
-		color: "#00A",
 		x: 50,
 		y: 50,
-		width: 55,
-		height: 78,
+		width: 58,
+		height: 74,
+		frame: 0,
+		spriteSheet: new Image(),
 		draw: function() {
-			canvas.fillStyle = this.color;
-			canvas.fillRect(this.x, this.y, this.width, this.height);
+			this.spriteSheet.src = 'images/lebron-sheet.png';
+			canvas.drawImage(this.spriteSheet, this.frame * 100, 0, this.width, this.height, this.x, this.y, this.width, this.height);
 		}
 	};
 
 	var ring = {
-		color: "#AAA",
 		x: 150,
 		y: 200,
 		width: 30,
 		height: 26,
+		frame: 0,
+		spriteSheet: new Image(),
 		draw: function() {
-			canvas.fillStyle = this.color;
-			canvas.fillRect(this.x, this.y, this.width, this.height);
+			this.spriteSheet.src = 'images/ring.png';
+			canvas.drawImage(this.spriteSheet, this.frame * 100, 0, this.width, this.height, this.x, this.y, this.width, this.height);
 		}
-	}
-
-	player.sprite = Sprite("lebron");
-	player.draw = function() {
-		this.sprite.draw(canvas, this.x, this.y);
-	}
-
-	ring.sprite = Sprite("ring");
-	ring.draw = function() {
-		this.sprite.draw(canvas, this.x, this.y);
 	}
 
 	function moveRing() {
@@ -98,16 +90,16 @@ function startGame() {
 		}
 		if (nearCollide(player, ring)) {
 			if (keydown.left && ring.x > 5) {
-				ring.x -= 7;
+				ring.x -= 6;
 			}
 			if (keydown.right && ring.x < CANVAS_WIDTH - ring.width) {
-				ring.x += 7;
+				ring.x += 6;
 			}
 			if (keydown.down && ring.y < CANVAS_HEIGHT - ring.height) {
-				ring.y += 7;
+				ring.y += 6;
 			}
 			if (keydown.up && ring.y > 0) {
-				ring.y -= 7;
+				ring.y -= 6;
 			}
 		}
 		if (ring.x + ring.width > CANVAS_WIDTH) {
@@ -143,7 +135,7 @@ function startGame() {
 		if (collides(player, ring)) {
 			//player.sprite = Sprite("lebron-smile");
 			// console.log("colliding");
-			player.sprite = Sprite("lebron-smile");
+			player.frame = 1;
 
 			
 			// clearInterval(refreshInterval);

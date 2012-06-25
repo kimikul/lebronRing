@@ -3,8 +3,8 @@ $(document).ready(function() {
 });
 
 function startGame() {
-	var CANVAS_WIDTH = 480;
-	var CANVAS_HEIGHT = 320;
+	var CANVAS_WIDTH = 500;
+	var CANVAS_HEIGHT = 460;
 
 	var canvasElement = $("<canvas width='" + CANVAS_WIDTH + "' height ='" + CANVAS_HEIGHT + "'></canvas>");
 	canvas = canvasElement.get(0).getContext("2d");

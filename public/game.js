@@ -96,20 +96,32 @@ function startGame() {
 			ring.y -= 2;
 			ring.x += 2;
 		}
-		// if (nearCollide(player, ring)) {
-		// 	if (keydown.left && ring.x > 5) {
-		// 		ring.x -= 5;
-		// 	}
-		// 	if (keydown.right && ring.x < CANVAS_WIDTH - ring.width) {
-		// 		ring.x += 5;
-		// 	}
-		// 	if (keydown.down && ring.y < CANVAS_HEIGHT - ring.height) {
-		// 		ring.y += 5;
-		// 	}
-		// 	if (keydown.up && ring.y > 0) {
-		// 		ring.y -= 5;
-		// 	}
-		// }
+		if (nearCollide(player, ring)) {
+			if (keydown.left && ring.x > 5) {
+				ring.x -= 7;
+			}
+			if (keydown.right && ring.x < CANVAS_WIDTH - ring.width) {
+				ring.x += 7;
+			}
+			if (keydown.down && ring.y < CANVAS_HEIGHT - ring.height) {
+				ring.y += 7;
+			}
+			if (keydown.up && ring.y > 0) {
+				ring.y -= 7;
+			}
+		}
+		if (ring.x + ring.width > CANVAS_WIDTH) {
+			ring.x = 40;
+		}
+		if (ring.x < 0) {
+			ring.x = CANVAS_WIDTH - ring.width - 40;
+		}
+		if (ring.y + ring.height > CANVAS_HEIGHT) {
+			ring.y = 40;
+		}
+		if (ring.y < 0) {
+			ring.y = CANVAS_HEIGHT - ring.height - 40;
+		}
 	}
 
 	// collision detection

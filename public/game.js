@@ -96,6 +96,20 @@ function startGame() {
 			ring.y -= 2;
 			ring.x += 2;
 		}
+		// if (nearCollide(player, ring)) {
+		// 	if (keydown.left && ring.x > 5) {
+		// 		ring.x -= 5;
+		// 	}
+		// 	if (keydown.right && ring.x < CANVAS_WIDTH - ring.width) {
+		// 		ring.x += 5;
+		// 	}
+		// 	if (keydown.down && ring.y < CANVAS_HEIGHT - ring.height) {
+		// 		ring.y += 5;
+		// 	}
+		// 	if (keydown.up && ring.y > 0) {
+		// 		ring.y -= 5;
+		// 	}
+		// }
 	}
 
 	// collision detection
@@ -104,6 +118,13 @@ function startGame() {
 			   a.x + a.width/2 > b.x &&
 			   a.y < b.y + b.height/2 &&
 			   a.y + a.height/2 > b.y;
+	}
+
+	function nearCollide(a, b) {
+		return a.x < b.x + b.width + 20 &&
+			   a.x + a.width + 20 > b.x &&
+			   a.y < b.y + b.height + 20 &&
+			   a.y + a.height + 20 > b.y;
 	}
 
 	function checkCollisions() {

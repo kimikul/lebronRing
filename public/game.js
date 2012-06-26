@@ -20,7 +20,6 @@ function startGame() {
 	}, 1000/FPS);
 
 	function updateTimer(startDate) {
-		// var seconds = Math.floor((new Date - startDate) / 1000);
 		var seconds = timeElapsed(startDate);
 		var minutes = Math.floor(seconds/60).toString();
 		seconds = (seconds % 60).toString();
@@ -67,7 +66,7 @@ function startGame() {
 		spriteSheet: new Image(),
 		draw: function() {
 			this.spriteSheet.src = 'images/lebron-sheet.png';
-			if(timeElapsed(startDate) > 14) {
+			if(timeElapsed(startDate) > 14 && !collides(player, ring)) {
 				this.frame = 2;
 			}
 			canvas.drawImage(this.spriteSheet, this.frame * 100, 0, this.width, this.height, this.x, this.y, this.width, this.height);
@@ -113,16 +112,16 @@ function startGame() {
 		// ring will move away from the player
 		if (nearCollide(player, ring)) {
 			if (keydown.left && ring.x > 5) {
-				ring.x -= 5;
+				ring.x -= 2;
 			}
 			if (keydown.right && ring.x < CANVAS_WIDTH - ring.width) {
-				ring.x += 5;
+				ring.x += 2;
 			}
 			if (keydown.down && ring.y < CANVAS_HEIGHT - ring.height) {
-				ring.y += 5;
+				ring.y += 2;
 			}
 			if (keydown.up && ring.y > 0) {
-				ring.y -= 5;
+				ring.y -= 2;
 			}
 		}
 		// ring teleportation code

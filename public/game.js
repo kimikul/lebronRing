@@ -7,17 +7,33 @@ function startGame() {
 	var CANVAS_HEIGHT = 460;
 	var startDate = new Date; // used for the timer
 	var noClip = new Audio("images/DarthVaderNO.mp3");
+	var message = "CONTROL LEBRON WITH THE ARROW KEYS TO HELP HIM GET TO THE RING!";
 
 	var canvasElement = $("<canvas width='" + CANVAS_WIDTH + "' height ='" + CANVAS_HEIGHT + "'></canvas>");
 	canvas = canvasElement.get(0).getContext("2d");
 	$('#game').html(canvasElement);
+	$('#message').find('h1').html(message);
 
 	var FPS = 30;
 	var refreshInterval = setInterval(function() {
 		update();
 		draw();
 		updateTimer(startDate);
+		updateMessage();
 	}, 1000/FPS);
+
+	function updateMessage(){
+		var message = "CONTROL LEBRON WITH THE ARROW KEYS TO HELP HIM GET TO THE RING!";
+		if(timeElapsed(startDate) > 4) {
+			message = "WATCH OUT FOR DAN GILBERT";
+		}
+		if(collides(player, ring)) {
+			message = "NOOOOOOOOOOOOOOO!";
+		}
+
+		// update the message
+		$('#message').find('h1').html(message);
+	}
 
 	function updateTimer(startDate) {
 		var seconds = timeElapsed(startDate);
@@ -144,12 +160,12 @@ function startGame() {
 			ring.x += 2;
 		}
 		// ring will move away from the player
-		if (nearCollide(player, ring)) {
-			if (keydown.left && ring.x > 5) { ring.x -= 5; }
-			if (keydown.right && ring.x < CANVAS_WIDTH - ring.width) { ring.x += 5;	}
-			if (keydown.down && ring.y < CANVAS_HEIGHT - ring.height) {	ring.y += 5; }
-			if (keydown.up && ring.y > 0) {	ring.y -= 5; }
-		}
+		// if (nearCollide(player, ring)) {
+		// 	if (keydown.left && ring.x > 5) { ring.x -= 5; }
+		// 	if (keydown.right && ring.x < CANVAS_WIDTH - ring.width) { ring.x += 5;	}
+		// 	if (keydown.down && ring.y < CANVAS_HEIGHT - ring.height) {	ring.y += 5; }
+		// 	if (keydown.up && ring.y > 0) {	ring.y -= 5; }
+		// }
 		// ring teleportation code
 		if (ring.x + ring.width > CANVAS_WIDTH) { ring.x = 40; }
 		if (ring.x < 0) { ring.x = CANVAS_WIDTH - ring.width - 40; }
@@ -202,6 +218,7 @@ function startGame() {
 			// show play again button
 			var playAgainButton = "<button class='btn btn-warning btn-large' type='submit' onclick='startGame()'>Play Again</button>";
 			$('#game').append(playAgainButton);
+
 		}
 		if (nearCollide(player, opponent)) {
 			// lebron spins

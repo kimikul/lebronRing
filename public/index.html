@@ -9,6 +9,7 @@
     <script src="game.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Oswald:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="style.css" type="text/css" />
+    <link rel="stylesheet" href="bootstrap.min.css" type="text/css" />
     <script type="text/javascript">
 
     var _gaq = _gaq || [];
@@ -25,7 +26,12 @@
   </head>
   <body>
     <h1>CONTROL LEBRON WITH THE ARROW KEYS TO HELP HIM GET TO THE RING!</h1>
+    <div id="timer">
+    </div>
     <div id="game">
+      <button class="btn btn-warning btn-large" type="submit" onclick="startGame()">
+        Start Game!
+      </button>
     </div>
     <script>(function(d){
       var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}

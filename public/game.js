@@ -1,20 +1,35 @@
 $(document).ready(function() {
-	startGame();
+	// startGame();
 });
 
 function startGame() {
-	var CANVAS_WIDTH = 500;
+	var CANVAS_WIDTH = 650;
 	var CANVAS_HEIGHT = 460;
+	var timer = 0;
+	var noClip = new Audio("images/DarthVaderNO.mp3");
 
 	var canvasElement = $("<canvas width='" + CANVAS_WIDTH + "' height ='" + CANVAS_HEIGHT + "'></canvas>");
 	canvas = canvasElement.get(0).getContext("2d");
-	canvasElement.appendTo('#game');
+	$('#game').html(canvasElement);
+	// canvasElement.appendTo('#game');
 
 	var FPS = 30;
 	var refreshInterval = setInterval(function() {
 		update();
 		draw();
+		timer++;
+		updateTimer(timer);
 	}, 1000/FPS);
+
+	function updateTimer(timer) {
+		var minutes = Math.floor(timer/60).toString();
+		var seconds = (timer % 60).toString();
+		if (seconds.length < 2) {
+			seconds = "0" + seconds;
+		}
+		var timePassed = minutes + ":" + seconds;
+		$('#timer').html(timePassed);
+	}
 
 	function update() {
 		if (keydown.left && player.x > 5) {
@@ -90,16 +105,16 @@ function startGame() {
 		}
 		if (nearCollide(player, ring)) {
 			if (keydown.left && ring.x > 5) {
-				ring.x -= 6;
+				ring.x -= 3;
 			}
 			if (keydown.right && ring.x < CANVAS_WIDTH - ring.width) {
-				ring.x += 6;
+				ring.x += 3;
 			}
 			if (keydown.down && ring.y < CANVAS_HEIGHT - ring.height) {
-				ring.y += 6;
+				ring.y += 3;
 			}
 			if (keydown.up && ring.y > 0) {
-				ring.y -= 6;
+				ring.y -= 3;
 			}
 		}
 		if (ring.x + ring.width > CANVAS_WIDTH) {
@@ -137,8 +152,16 @@ function startGame() {
 			// console.log("colliding");
 			player.frame = 1;
 
-			
-			// clearInterval(refreshInterval);
+			// play nooooo sound
+			noClip.play();
+			noClip.currentTime = 0;
+
+			// stop movement and timer
+			clearInterval(refreshInterval);
+
+			// show play again button
+			var playAgainButton = "<button class='btn btn-warning btn-large' type='submit' onclick='startGame()'>Play Again</button>";
+			$('#game').append(playAgainButton);
 		} else {
 			//player.sprite = Sprite("lebron");
 			// console.log("not colliding");

@@ -5,30 +5,33 @@ $(document).ready(function() {
 function startGame() {
 	var CANVAS_WIDTH = 600;
 	var CANVAS_HEIGHT = 460;
-	var timer = 0;
+	var startDate = new Date; // used for the timer
 	var noClip = new Audio("images/DarthVaderNO.mp3");
 
 	var canvasElement = $("<canvas width='" + CANVAS_WIDTH + "' height ='" + CANVAS_HEIGHT + "'></canvas>");
 	canvas = canvasElement.get(0).getContext("2d");
 	$('#game').html(canvasElement);
-	// canvasElement.appendTo('#game');
 
 	var FPS = 30;
 	var refreshInterval = setInterval(function() {
 		update();
 		draw();
-		timer++;
-		updateTimer(timer);
+		updateTimer(startDate);
 	}, 1000/FPS);
 
-	function updateTimer(timer) {
-		var minutes = Math.floor(timer/60).toString();
-		var seconds = (timer % 60).toString();
+	function updateTimer(startDate) {
+		var seconds = timeElapsed(startDate);
+		var minutes = Math.floor(seconds/60).toString();
+		seconds = (seconds % 60).toString();
 		if (seconds.length < 2) {
 			seconds = "0" + seconds;
 		}
 		var timePassed = minutes + ":" + seconds;
 		$('#timer').html(timePassed);
+	}
+
+	function timeElapsed(startDate) {
+		return Math.floor((new Date - startDate) / 1000);
 	}
 
 	function update() {
@@ -63,6 +66,9 @@ function startGame() {
 		spriteSheet: new Image(),
 		draw: function() {
 			this.spriteSheet.src = 'images/lebron-sheet.png';
+			if(timeElapsed(startDate) > 14 && !collides(player, ring)) {
+				this.frame = 2;
+			}
 			canvas.drawImage(this.spriteSheet, this.frame * 100, 0, this.width, this.height, this.x, this.y, this.width, this.height);
 		}
 	};
@@ -103,6 +109,7 @@ function startGame() {
 			ring.y -= 2;
 			ring.x += 2;
 		}
+		// ring will move away from the player
 		if (nearCollide(player, ring)) {
 			if (keydown.left && ring.x > 5) {
 				ring.x -= 6;
@@ -117,6 +124,7 @@ function startGame() {
 				ring.y -= 6;
 			}
 		}
+		// ring teleportation code
 		if (ring.x + ring.width > CANVAS_WIDTH) {
 			ring.x = 40;
 		}
@@ -148,8 +156,7 @@ function startGame() {
 
 	function checkCollisions() {
 		if (collides(player, ring)) {
-			//player.sprite = Sprite("lebron-smile");
-			// console.log("colliding");
+			// change lebron to smile
 			player.frame = 1;
 
 			// play nooooo sound

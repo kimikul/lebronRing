@@ -3,7 +3,7 @@ $(document).ready(function() {
 });
 
 function startGame() {
-	var CANVAS_WIDTH = 650;
+	var CANVAS_WIDTH = 600;
 	var CANVAS_HEIGHT = 460;
 	var timer = 0;
 	var noClip = new Audio("images/DarthVaderNO.mp3");

@@ -7,33 +7,22 @@ function startGame() {
 	var CANVAS_HEIGHT = 460;
 	var startDate = new Date; // used for the timer
 	var noClip = new Audio("images/DarthVaderNO.mp3");
-	var message = "CONTROL LEBRON WITH THE ARROW KEYS TO HELP HIM GET TO THE RING!";
 
 	var canvasElement = $("<canvas width='" + CANVAS_WIDTH + "' height ='" + CANVAS_HEIGHT + "'></canvas>");
 	canvas = canvasElement.get(0).getContext("2d");
 	$('#game').html(canvasElement);
-	$('#message').find('h1').html(message);
+	$('#message').find('h1').html("CONTROL LEBRON WITH THE ARROW KEYS TO HELP HIM GET TO THE RING!");
 
 	var FPS = 30;
+	var step = 0;
 	var refreshInterval = setInterval(function() {
 		update();
 		draw();
 		updateTimer(startDate);
-		updateMessage();
+		message.update(step);
+		// updateMessage(step);
+		step ++;	// increment
 	}, 1000/FPS);
-
-	function updateMessage(){
-		var message = "CONTROL LEBRON WITH THE ARROW KEYS TO HELP HIM GET TO THE RING!";
-		if(timeElapsed(startDate) > 4) {
-			message = "WATCH OUT FOR DAN GILBERT";
-		}
-		if(collides(player, ring)) {
-			message = "NOOOOOOOOOOOOOOO!";
-		}
-
-		// update the message
-		$('#message').find('h1').html(message);
-	}
 
 	function updateTimer(startDate) {
 		var seconds = timeElapsed(startDate);
@@ -62,6 +51,27 @@ function startGame() {
 		player.draw();
 		opponent.draw();
 		ring.draw();
+	}
+
+	var message = {
+		list: ["WATCH OUT FOR DAN GILBERT!",
+			   "DON'T LET THEM GET IN YOUR HEAD",
+			   "WHAT DO YOU WANT ME TO DO?",
+			   "JUST BELIEVE.",
+			   "LET THE RING COME TO YOU.",
+			   "TEARS WON'T GET YOU THE RING!"],
+		update: function(t) {
+			// randomly select a message every 't'
+			if((t % 100) == 0) {
+				var m = this.list[Math.floor(Math.random() * this.list.length) - 1];
+			}
+
+			// if the player catches the ring
+			if(collides(player, ring)) { m = "NOOOOOOOOOOOOOOO!"; }
+
+			// update the message
+			$('#message').find('h1').html(m);
+		}
 	}
 
 	var player = {

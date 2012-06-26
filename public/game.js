@@ -110,20 +110,22 @@ function startGame() {
 			ring.y -= 2;
 			ring.x += 2;
 		}
+		// ring will move away from the player
 		if (nearCollide(player, ring)) {
 			if (keydown.left && ring.x > 5) {
-				ring.x -= 3;
+				ring.x -= 5;
 			}
 			if (keydown.right && ring.x < CANVAS_WIDTH - ring.width) {
-				ring.x += 3;
+				ring.x += 5;
 			}
 			if (keydown.down && ring.y < CANVAS_HEIGHT - ring.height) {
-				ring.y += 3;
+				ring.y += 5;
 			}
 			if (keydown.up && ring.y > 0) {
-				ring.y -= 3;
+				ring.y -= 5;
 			}
 		}
+		// ring teleportation code
 		if (ring.x + ring.width > CANVAS_WIDTH) {
 			ring.x = 40;
 		}

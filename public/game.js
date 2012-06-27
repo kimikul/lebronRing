@@ -6,7 +6,7 @@ function startGame() {
 	var CANVAS_WIDTH = 600;
 	var CANVAS_HEIGHT = 460;
 	var startDate = new Date; // used for the timer
-	var noClip = new Audio("images/DarthVaderNO.mp3");
+	var noClip = new Audio("images/DarthVaderNO.wav");
 
 	var canvasElement = $("<canvas width='" + CANVAS_WIDTH + "' height ='" + CANVAS_HEIGHT + "'></canvas>");
 	canvas = canvasElement.get(0).getContext("2d");
